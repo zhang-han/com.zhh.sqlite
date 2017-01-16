@@ -2,6 +2,15 @@ package com.zhh.adapter.tools;
 
 import android.util.SparseArray;
 import android.view.View;
+
+
+
+/**
+ * 作者： zzhh
+ * 
+ * 时间：@2016年12月22日 下午5:00:09
+ * 
+ */
 public class CommonViewHolder extends SparseArray<View>{
     /**
      * 

@@ -9,9 +9,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * 数据库操作工具类OO
+ * 作者： zzhh
  * 
- * @author HDahan 2013上午11:29:37
+ * 时间：@2016年12月22日 下午5:00:34
  * 
  */
 public class DataBaseFactory extends SQLiteOpenHelper {
@@ -68,10 +68,10 @@ public class DataBaseFactory extends SQLiteOpenHelper {
 		List<Object> list = new ArrayList<Object>();
 		for(Class<?> clazz : entityClasses) {
 			tableName = clazz.getAnnotation(Table.class).name();
-			list = BaseService.findAll(clazz);
+			list = BaseService.getInstance().findAll(clazz);
 			db.execSQL("DROP TABLE IF EXISTS " + tableName);
 			onCreate(db);
-			BaseService.insert(list);
+			BaseService.getInstance().insert(list);
 		}
 	}
 

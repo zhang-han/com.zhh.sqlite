@@ -2,6 +2,12 @@ package com.zhh.sqlite.tools;
 
 import java.lang.reflect.Method;
 
+/**
+ * 作者： zzhh
+ * 
+ * 时间：@2016年12月22日 下午5:00:52
+ * 
+ */
 public class ReflectUtil {
 	
 	/**

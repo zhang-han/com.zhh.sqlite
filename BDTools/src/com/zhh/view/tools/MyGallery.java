@@ -11,6 +11,12 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.Gallery;
 
+/**
+ * 作者： zzhh
+ * 
+ * 时间：@2016年12月22日 下午5:01:08
+ * 
+ */
 @SuppressWarnings("deprecation")
 public class MyGallery extends Gallery {
 

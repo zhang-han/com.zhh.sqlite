@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
 /**
+ * 作者： zzhh
  * 
- * @param <T> 传入List的类型
+ * 时间：@2016年12月22日 下午5:00:02
+ * 
  */
 public abstract class CommonAdapter<T> extends BaseAdapter {
     Context mContext; 
@@ -19,8 +22,8 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     /**
      * 
      * @param mContext 
-     * @param mList
-     * @param resource 对应的layout的xml，如R.id.XXXX
+     * @param mList 数据源，请填写
+     * @param resource 对应的layout的xml，如R.layout.XXXX
      */
     public CommonAdapter(Context mContext, List<T> mList, int resource) {
         super();
@@ -53,6 +56,7 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
      * @param commonViewHolder 当前的ViewHolder
      * @param currentView    当前的View
      * @param item    对应View的数据
+     * @param position 这个大家都懂了吧
      */
     public abstract void setViewData(CommonViewHolder commonViewHolder,View currentView,T item, int position);
     

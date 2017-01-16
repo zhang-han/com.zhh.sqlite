@@ -11,6 +11,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * 作者： zzhh
+ * 
+ * 时间：@2016年12月22日 下午5:00:23
+ * 
+ */
 public class JsonUtil {
 	
 	//把JsonArray的字符串转换成List<Map<String, Object>>

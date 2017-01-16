@@ -1,5 +1,11 @@
 package com.zhh.sqlite.tools;
 
+/**
+ * 作者： zzhh
+ * 
+ * 时间：@2016年12月22日 下午5:00:58
+ * 
+ */
 public class StrUtil {
 	/**
 	 * 把字符串的指定字母大写

@@ -11,9 +11,27 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+/**
+ * 作者： zzhh
+ * 
+ * 时间：@2016年12月22日 下午5:00:29
+ * 
+ */
 public class BaseService {
-		/** 插入一个表（实体类）的数据  */
-	public static <T> T insert(T entity) {
+	
+	private BaseService(){}
+	
+	private static BaseService instance = null;
+	
+	public static synchronized BaseService getInstance(){
+		if(instance == null){
+				instance = new BaseService();
+		}
+		return instance;
+	}
+	
+	/** 插入一个表（实体类）的数据  */
+	public <T> T insert(T entity) {
 		Class<?> clazz = entity.getClass();
 		String tableName = clazz.getAnnotation(Table.class).name();
 		String id = clazz.getAnnotation(Id.class).name();
@@ -53,7 +71,7 @@ public class BaseService {
 		return entity;
 	}
 	/** 插入多个表（实体类）的数据  */
-	public static <T> List<T> insert(List<T> entitys) {
+	public <T> List<T> insert(List<T> entitys) {
 		if(entitys != null && entitys.size() != 0) {
 			List<T> list = new ArrayList<T>();
 			for(T entity : entitys) {
@@ -64,7 +82,7 @@ public class BaseService {
 		return null;
 	}
 	/** 更新一个表（实体类）的数据  */
-	public static <T> Integer update(T entity) {
+	public <T> Integer update(T entity) {
 		Class<?> clazz = entity.getClass();
 		String tableName = clazz.getAnnotation(Table.class).name();
 		String id = clazz.getAnnotation(Id.class).name();
@@ -99,7 +117,7 @@ public class BaseService {
 		return result;
 	}
 	/** 查询一个表（实体类）的数据   第一个为Id，第二个为表（实体类）  */
-	public static <T> T findOne(Serializable id, Class<?> clazz) {
+	public <T> T findOne(Serializable id, Class<?> clazz) {
 		String tableName = clazz.getAnnotation(Table.class).name();
 		String idName = clazz.getAnnotation(Id.class).name();
 		Field[] fieldArray = clazz.getDeclaredFields();
@@ -143,7 +161,7 @@ public class BaseService {
 		return entity;
 	}
 	/** 查询一个表（实体类）的所有数据  */
-	public static <T> List<T> findAll(Class<?> clazz) {
+	public <T> List<T> findAll(Class<?> clazz) {
 		String tableName = clazz.getAnnotation(Table.class).name();
 		Field[] fieldArray = clazz.getDeclaredFields();
 		
@@ -187,14 +205,14 @@ public class BaseService {
 		return list.size() != 0 ? list : null;
 	}
 	/** 删除一个表（实体类）的某一个数据数据      第一个为Id，第二个为表明（实体类）  */
-	public static Integer deleteOne(Serializable id, Class<?> clazz) {
+	public Integer deleteOne(Serializable id, Class<?> clazz) {
 		String tableName = clazz.getAnnotation(Table.class).name();
 		String idName = clazz.getAnnotation(Id.class).name();
 		Integer result = DataBaseFactory.getDb().delete(tableName, idName+"=?", new String[] {id.toString()});
 		return result;
 	}
 	/** 删除一个表（实体类）的多个数据数据       第一个为Id的集合，第二个为表名（实体类）  */
-	public static void deleteMore(List<Serializable> ids, Class<?> clazz) {
+	public void deleteMore(List<Serializable> ids, Class<?> clazz) {
 		if(ids != null && ids.size() != 0) {
 			for(Serializable id : ids) {
 				deleteOne(id, clazz);
@@ -202,12 +220,12 @@ public class BaseService {
 		}
 	}
 	/** 删除一个表（实体类）的数据  */
-	public static void deleteAll(Class<?> clazz) {
+	public void deleteAll(Class<?> clazz) {
 		String tableName = clazz.getAnnotation(Table.class).name();
 		DataBaseFactory.getDb().delete(tableName, null, null);
 	}
 	/** 查询一个表（实体类）的数据    第一个为sql语句，第二个为sql中占位符的值，第三个为表名（实体类）  */
-	public static <T> List<T> queryForEntitys(String sql, String[] paramValues, Class<?> clazz) {
+	public <T> List<T> queryForEntitys(String sql, String[] paramValues, Class<?> clazz) {
 		Field[] fieldArray = clazz.getDeclaredFields();
 		
 		Cursor cursor = DataBaseFactory.getDb().rawQuery(sql, paramValues);
@@ -251,7 +269,7 @@ public class BaseService {
 		return list.size() != 0 ? list : null;
 	}
 	/** 查询一个表（实体类）的一条数据数据    第一个为sql语句，第二个为sql中占位符的值，第三个为表名（实体类） */
-	public static <T> T queryForEntity(String sql, String[] paramValues, Class<?> clazz) {
+	public <T> T queryForEntity(String sql, String[] paramValues, Class<?> clazz) {
 		Field[] fieldArray = clazz.getDeclaredFields();
 		
 		Cursor cursor = DataBaseFactory.getDb().rawQuery(sql, paramValues);
@@ -298,7 +316,7 @@ public class BaseService {
 	}
 	/** 查询一个表（实体类）的数据    第一个为sql语句，第二个为sql中占位符的值  返回list<map> 适合复杂查询  */
 	@SuppressLint("NewApi")
-	public static List<Map<String, Object>> queryForMaps(String sql, String[] paramValues) {
+	public List<Map<String, Object>> queryForMaps(String sql, String[] paramValues) {
 
 		Cursor cursor = DataBaseFactory.getDb().rawQuery(sql, paramValues);
 		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
@@ -327,9 +345,8 @@ public class BaseService {
 		return list.size() != 0 ? list : null;
 	}
 	/** 查询一个表（实体类）的数据    第一个为sql语句，第二个为sql中占位符的值  返回list<map> 适合复杂查询  */
-	
 	@SuppressLint("NewApi")
-	public static Map<String, Object> queryForMap(String sql, String[] paramValues) {
+	public Map<String, Object> queryForMap(String sql, String[] paramValues) {
 		Cursor cursor = DataBaseFactory.getDb().rawQuery(sql, paramValues);
 		if(cursor.getCount() > 1) {
 			throw new RuntimeException("记录超过一条!");
